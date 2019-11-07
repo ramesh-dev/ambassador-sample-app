@@ -1,0 +1,23 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-2-svc
+  annotations:
+spec:
+  selector:
+    app: hello-2
+  ports:
+  - name: http
+    protocol: TCP
+    port: 3002
+
+---
+# Ambassador service mapping 
+apiVersion: getambassador.io/v1
+kind: Mapping
+metadata:
+  name: hello-2-mapping
+spec:
+  prefix: /v2
+  service: hello-2-svc:3002
