@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: example-auth
+spec:
+  type: ClusterIP
+  selector:
+    app: example-auth
+  ports:
+  - name: auth
+    protocol: TCP
+    port: 3000
+  
+---
+apiVersion: getambassador.io/v1
+kind: AuthService
+metadata:
+  name: hello-app-auth
+spec:
+  auth_service: "example-auth:3000"
+  path_prefix: "/extauth"
+  allowed_request_headers:
+  - "x-qotm-session"
+  allowed_authorization_headers:
+  - "x-qotm-session"
